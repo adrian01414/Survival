@@ -51,9 +51,10 @@ public class StartGamePanel : MonoBehaviour
             }
         }
 
-        SceneManager.LoadScene("ControllerTestScene"); // next methods should be execute on the next scene
-        //_steamLobby.MaxConnections = 4; //max connections
-        //set lobby type
+        SceneManager.LoadScene("ControllerTestScene"); // 
+        int maxConnections = 4;
+
+        SteamMatchmaking.CreateLobby(lobbyType, maxConnections);
     }
 
     private void MultiplayerToggleChange(bool value)
