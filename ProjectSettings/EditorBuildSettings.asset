@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Survival/MainMenu/Scenes/MainMenu.unity
+    path: Assets/Scenes/MainMenu.unity
     guid: 475c788afeda2ee40b3741ac5efe5378
   - enabled: 1
-    path: Assets/Survival/Entities/Player/CharacterControllerTest/Scenes/ControllerTestScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/WorldScene.unity
+    guid: 11741b92d033a3245bad485ae71150b5
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 763c401e480693b49841e6f586e8d005, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}

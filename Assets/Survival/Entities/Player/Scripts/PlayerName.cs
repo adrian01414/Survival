@@ -12,7 +12,13 @@ public class PlayerName : NetworkBehaviour
     {
         if (isOwned)
         {
-            CmdSetPlayerName(SteamFriends.GetPersonaName());
+            if(NetworkManager.singleton is SteamNetworkManager)
+            {
+                if (SteamManager.Initialized)
+                {
+                    CmdSetPlayerName(SteamFriends.GetPersonaName());
+                }
+            }
             _text.gameObject.SetActive(false);
         }
     }

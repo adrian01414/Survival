@@ -363,7 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _actions: {fileID: -944628639613478452, guid: 1994d4ef861eb2a4588c45534247a9a0, type: 3}
-  _defaultMap: Player
+  _defaultMap: GameplayDefault
   _lookAction: Look
 --- !u!1 &985565993922752111
 GameObject:
@@ -1206,6 +1206,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6011130062353983008}
+  - component: {fileID: -2616509900312875586}
   - component: {fileID: 8826315537844125886}
   - component: {fileID: -5540946155397742039}
   - component: {fileID: -7404157888196994850}
@@ -1244,6 +1245,18 @@ Transform:
   - {fileID: 6288362456518378812}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2616509900312875586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3356475072259882336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cfd7ac56c83c55489961662e0f185ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
 --- !u!114 &8826315537844125886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1268,7 +1281,6 @@ MonoBehaviour:
   _fallSpeedMultiplier: 2
   _inputAirImpact: 1.5
   _inputGroundImpact: 10
-  _playerVelocityY: 0
 --- !u!114 &-5540946155397742039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1469,9 +1481,25 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 4a51f5e5-8614-43d0-85ae-a67d50dfff73
     m_ActionName: 'Player/Sprint[/Keyboard/leftShift]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 050c0c73-f842-42f6-8820-acd63cc27aea
+    m_ActionName: 'Build/MainAction[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 33a28b9e-88c9-44d1-96d4-326ab42915a7
+    m_ActionName: 'GameplayDefault/BuildModeEnable[/Keyboard/b]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4dbc0742-7e71-47cd-870b-d84c3151f108
+    m_ActionName: 'Build/StructureRotation[/Mouse/scroll]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 565c3d54-a66a-495b-a023-0bad72a40d22
+    m_ActionName: 'Build/BuildModeDisable[/Keyboard/b,/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: 40589122-7865-4fcb-b66f-aca15ba13bc0
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &2044564479936021368

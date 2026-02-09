@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using Mirror;
 using Steamworks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 public class StartGamePanel : MonoBehaviour
 {
@@ -13,15 +13,26 @@ public class StartGamePanel : MonoBehaviour
     [SerializeField] private TMP_Dropdown _lobbyTypeDropdown;
     [SerializeField] private Toggle _multiplayerToggle;
     [SerializeField] private CanvasGroup _lobbyTypeCanvasGroup;
-    [Space]
-    [SerializeField] private SteamLobby _steamLobby;
+    [SerializeField] private CanvasGroup _playerCountCanvasGroup;
+    [SerializeField] private TMP_InputField _playerCountInputField;
+    [SerializeField] private TMP_Text _playerMaxCountText;
 
     private Dictionary<string, ELobbyType> _lobbyType = new();
+
+    private LobbyInfo _lobbyInfo;
 
     private void OnEnable()
     {
         _startGameButton.onClick.AddListener(StartGame);
         _multiplayerToggle.onValueChanged.AddListener(MultiplayerToggleChange);
+        _playerCountInputField.onSubmit.AddListener(ChangePlayerCount);
+        _playerCountInputField.onDeselect.AddListener(ChangePlayerCount);
+    }
+
+    [Inject]
+    public void Construct(LobbyInfo lobbyInfo)
+    {
+        _lobbyInfo = lobbyInfo;
     }
 
     private void Awake()
@@ -34,6 +45,9 @@ public class StartGamePanel : MonoBehaviour
 
         _lobbyType.Add("Friends only", ELobbyType.k_ELobbyTypeFriendsOnly);
         _lobbyType.Add("Public", ELobbyType.k_ELobbyTypePublic);
+
+        _playerCountInputField.text = _lobbyInfo.MaxConnections.ToString();
+        _playerMaxCountText.text = $"Max: {_lobbyInfo.MaxPlayerCount}";
     }
 
     private void StartGame()
@@ -51,10 +65,7 @@ public class StartGamePanel : MonoBehaviour
             }
         }
 
-        SceneManager.LoadScene("ControllerTestScene"); // 
-        int maxConnections = 4;
-
-        SteamMatchmaking.CreateLobby(lobbyType, maxConnections);
+        SceneManager.LoadScene("WorldScene");
     }
 
     private void MultiplayerToggleChange(bool value)
@@ -63,15 +74,48 @@ public class StartGamePanel : MonoBehaviour
         {
             _lobbyTypeCanvasGroup.alpha = 1;
             _lobbyTypeCanvasGroup.interactable = true;
+
+            _playerCountCanvasGroup.alpha = 1;
+            _playerCountInputField.interactable = true;
         } else
         {
             _lobbyTypeCanvasGroup.alpha = 0.3f;
             _lobbyTypeCanvasGroup.interactable = false;
+
+            _playerCountCanvasGroup.alpha = 0.3f;
+            _playerCountInputField.interactable = false;
         }
+    }
+
+    private void ChangePlayerCount(string str)
+    {
+        int value = 0;
+        try
+        {
+            value = int.Parse(str);
+        } catch 
+        {
+            value = 2;
+        }
+
+        if (value < 2)
+        {
+            _lobbyInfo.MaxConnections = 2;
+        } else if(value > _lobbyInfo.MaxPlayerCount)
+        {
+            _lobbyInfo.MaxConnections = _lobbyInfo.MaxPlayerCount;
+        } else
+        {
+            _lobbyInfo.MaxConnections = value;
+        }
+        _playerCountInputField.text = _lobbyInfo.MaxConnections.ToString();
     }
 
     private void OnDisable()
     {
         _startGameButton.onClick.RemoveListener(StartGame);
+        _multiplayerToggle.onValueChanged.RemoveListener(MultiplayerToggleChange);
+        _playerCountInputField.onSubmit.RemoveListener(ChangePlayerCount);
+        _playerCountInputField.onDeselect.RemoveListener(ChangePlayerCount);
     }
 }

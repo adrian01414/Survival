@@ -138,15 +138,8 @@ public class CharacterControllerMovement : MonoBehaviour
         _targetSpeed = MoveSpeed;
     }
 
-    private void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
     private void Update()
     {
-        print(_characterController.isGrounded);
         CheckOverheadObstacle();
         Jump();
         ApplyCoyoteTime();
