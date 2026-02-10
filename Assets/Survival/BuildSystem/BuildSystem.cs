@@ -1,9 +1,11 @@
 using Mirror;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
-public class BuildSystem : MonoBehaviour
+public class BuildSystem : NetworkBehaviour
 {
     private static int _structureID = 0;
 
@@ -132,33 +134,37 @@ public class BuildSystem : MonoBehaviour
         _previewRotation = Quaternion.Euler(_previewRotation.eulerAngles + rotation);
     }
 
-    private bool TryPlaceStructure()
+    private void TryPlaceStructure(int prefabIndex, Vector3 position, Quaternion rotation)
     {
-        bool result = false;
+        var prefab = NetworkManager.singleton.spawnPrefabs[prefabIndex];
 
-        if (_enabled && _currentStructureInfo)
-        {
-            if (_currentStructurePreview)
-            {
-                if (_currentStructurePreview.AvailableForPlace)
-                {
-                    var structure = Instantiate(_currentStructureInfo.Structure, 
-                                                _currentStructurePreview.transform.position,
-                                                _currentStructurePreview.transform.rotation,
-                                                transform);
-                    structure.name = $"{_currentStructureInfo.Structure.name}[{_structureID}]";
-                    _structureID++;
-                    result = true;
-                }
-            }
-        }
+        var structure = Instantiate(prefab, position, rotation, transform);
 
-        return result;
+        structure.name = $"{prefab.name}[{_structureID}]";
+        _structureID++;
+
+        NetworkServer.Spawn(structure);
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdPlaceStructure(int prefabIndex, Vector3 position, Quaternion rotation)
+    {
+        TryPlaceStructure(prefabIndex, position, rotation);
     }
 
     private void PlaceStructurePerformed(InputAction.CallbackContext callback)
     {
-        TryPlaceStructure();
+        if(!_enabled || !_currentStructureInfo || !_currentStructurePreview || !_currentStructurePreview.AvailableForPlace) return;
+
+        int prefabIndex = NetworkManager.singleton.spawnPrefabs.IndexOf(_currentStructureInfo.Structure.gameObject);
+        if (NetworkServer.active)
+        {
+            TryPlaceStructure(prefabIndex, _currentStructurePreview.transform.position, _currentStructurePreview.transform.rotation);
+        }
+        else
+        {
+            CmdPlaceStructure(prefabIndex, _currentStructurePreview.transform.position, _currentStructurePreview.transform.rotation);
+        }
     }
 
     private void RotateStrucurePerformed(InputAction.CallbackContext callback)
@@ -168,7 +174,7 @@ public class BuildSystem : MonoBehaviour
 
     private void ChangeBuildAvailable(GameState state)
     {
-        _enabled = state == GameState.PlayerBuild;
+        _enabled = state == GameState.Build;
 
         if (_currentStructurePreview)
         {

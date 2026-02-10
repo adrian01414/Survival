@@ -17,15 +17,14 @@ public class GameManager
         }
     }
 
-    public void SetPlayerBuildState(InputAction.CallbackContext callback) => State = GameState.PlayerBuild;
-
+    public void SetBuildMenuState(InputAction.CallbackContext callback) => State = GameState.BuildMenu;
+    public void SetBuildState(InputAction.CallbackContext callback) => State = GameState.Build;
     public void SetGameplayDefaultState(InputAction.CallbackContext callback) => State = GameState.GameplayDefault;
 }
 
 public enum GameState
 {
-    Menu,
-    Loading,
     GameplayDefault,
-    PlayerBuild
+    Build,
+    BuildMenu
 }

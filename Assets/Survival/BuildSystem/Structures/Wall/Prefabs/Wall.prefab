@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4718779724461777706}
   - component: {fileID: 3026548337150863158}
+  - component: {fileID: 5883052038838582122}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -47,19 +48,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68dfd22a21bd1174cac651aa45f9bcd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Survival::Wall
-  Pivots:
-  - {fileID: 1399264658442244065}
-  - {fileID: 3232756310882538886}
-  - {fileID: 1637092579676345578}
-  - {fileID: 3026139813921175399}
-  - {fileID: 8501993186231057101}
-  - {fileID: 4619220195694888345}
-  - {fileID: 7383434958059091556}
-  - {fileID: 7012367683991304379}
-  - {fileID: 9148738031853621827}
-  - {fileID: 4262616513533985695}
-  - {fileID: 379584511466445455}
-  - {fileID: 4010911299276092783}
+--- !u!114 &5883052038838582122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334670781190526234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Mirror::Mirror.NetworkIdentity
+  sceneId: 0
+  _assetId: 1706168471
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0
 --- !u!1 &2942636452341987963
 GameObject:
   m_ObjectHideFlags: 0

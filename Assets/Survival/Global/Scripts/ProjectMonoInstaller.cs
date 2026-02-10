@@ -11,10 +11,17 @@ public class ProjectMonoInstaller : MonoInstaller
 
         Container
             .BindInterfacesAndSelfTo<InputManager>()
-            .AsSingle();
+            .AsSingle()
+            .NonLazy();
 
         Container
             .Bind<GameManager>()
-            .AsSingle();
+            .AsSingle()
+            .NonLazy();
+
+        Container
+            .BindInterfacesAndSelfTo<CursorManager>()
+            .AsSingle()
+            .NonLazy();
     }
 }

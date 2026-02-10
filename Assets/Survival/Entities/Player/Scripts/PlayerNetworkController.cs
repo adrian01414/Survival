@@ -1,8 +1,9 @@
 using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
-[RequireComponent (typeof(PlayerInput), typeof(CharacterControllerMovement))]
+[RequireComponent(typeof(CharacterControllerMovement))]
 public class PlayerNetworkController : NetworkBehaviour
 {
     [SerializeField] private Transform _cameraTransform; //
@@ -12,13 +13,18 @@ public class PlayerNetworkController : NetworkBehaviour
 
     [SerializeField] private Vector3 pivotOffset = new Vector3(0f, 0f, 0f);
 
-    private CharacterControllerMovement _characterControllerMovement;
+    private Vector2 _moveAxis;
 
-    private Vector3 _moveAxis;
+    // Dependencies
+    private InputManager _inputManager;
+    private CharacterControllerMovement _characterControllerMovement;
 
     private void Awake()
     {
         _characterControllerMovement = GetComponent<CharacterControllerMovement>();
+        _inputManager = InputManager.Instance;
+        _inputManager.GameplayDefault_Jump.performed += OnJump;
+        _inputManager.GameplayDefault_Sprint.performed += OnSprint;
     }
 
     private void Start()
@@ -33,16 +39,7 @@ public class PlayerNetworkController : NetworkBehaviour
         }
     }
 
-    public void OnMove(InputAction.CallbackContext context)
-    {
-        if (!isOwned)
-        {
-            return;
-        }
-        _moveAxis = context.ReadValue<Vector2>();
-    }
-    
-    public void OnSprint(InputAction.CallbackContext context)
+    private void OnSprint(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
@@ -54,12 +51,8 @@ public class PlayerNetworkController : NetworkBehaviour
         }
     }
 
-    public void OnJump(InputAction.CallbackContext context)
+    private void OnJump(InputAction.CallbackContext context)
     {
-        if (!isOwned)
-        {
-            return;
-        }
         if (context.performed)
         {
             _characterControllerMovement.JumpPerform();
@@ -73,7 +66,9 @@ public class PlayerNetworkController : NetworkBehaviour
     private void Update()
     {
         if (!isOwned) return;
-        
+
+        _moveAxis = _inputManager.MoveAxis;
+
         Move();
 
         _rigParentTransform.rotation = Quaternion.LookRotation(GetForward());
@@ -99,5 +94,11 @@ public class PlayerNetworkController : NetworkBehaviour
         right.y = 0f;
 
         return right.normalized;
+    }
+
+    private void OnDisable()
+    {
+        _inputManager.GameplayDefault_Jump.performed -= OnJump;
+        _inputManager.GameplayDefault_Sprint.performed -= OnSprint;
     }
 }

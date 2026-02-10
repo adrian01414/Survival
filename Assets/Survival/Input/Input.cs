@@ -129,7 +129,7 @@ public partial class @Input: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""BuildModeEnable"",
+                    ""name"": ""BuildMenu"",
                     ""type"": ""Button"",
                     ""id"": ""33a28b9e-88c9-44d1-96d4-326ab42915a7"",
                     ""expectedControlType"": """",
@@ -234,7 +234,7 @@ public partial class @Input: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""BuildModeEnable"",
+                    ""action"": ""BuildMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -270,6 +270,24 @@ public partial class @Input: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BuildMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""a3b3f856-c1d9-43cd-b6a4-296b4a3e51fc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""30dd1418-a3a2-4119-b825-edf8b6b82398"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -297,8 +315,8 @@ public partial class @Input: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4cb9eb5d-d28c-4c94-857b-859d2fb08d50"",
-                    ""path"": ""<Keyboard>/b"",
+                    ""id"": ""18f9bba7-7d21-46e3-884d-31acc10aac6b"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -308,12 +326,128 @@ public partial class @Input: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""18f9bba7-7d21-46e3-884d-31acc10aac6b"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""id"": ""75068793-9e03-48cd-b579-350b39f2a8e4"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""BuildModeDisable"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c8b0aa6f-1eaf-4bf6-9655-378576a7787f"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BuildMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""b64f79bd-06ee-4b35-9ac6-ae9e6305a90d"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""a705c456-e6bf-420f-bb57-cb16949db74e"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""0d82831c-37f9-4517-b834-a0ec5fc9a001"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""d698fb1d-a700-4239-9bac-5aa3b4e55777"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""fdf4bfc9-f3c5-4bbd-8a03-fdc8c883a747"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
+        },
+        {
+            ""name"": ""BuildMenu"",
+            ""id"": ""35d9c0ba-792a-443d-b778-acffffd07a10"",
+            ""actions"": [
+                {
+                    ""name"": ""CloseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""e8342620-f4a1-4afb-a6cf-54418cd86d83"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""15cdaf31-e52d-4a30-a27d-9d4c284943c3"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""68f94b4d-4ee3-4758-8d10-61243a4ee621"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a606fc62-bb2c-4610-a977-0c8efc576c76"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -328,18 +462,24 @@ public partial class @Input: IInputActionCollection2, IDisposable
         m_GameplayDefault_Move = m_GameplayDefault.FindAction("Move", throwIfNotFound: true);
         m_GameplayDefault_Jump = m_GameplayDefault.FindAction("Jump", throwIfNotFound: true);
         m_GameplayDefault_Sprint = m_GameplayDefault.FindAction("Sprint", throwIfNotFound: true);
-        m_GameplayDefault_BuildModeEnable = m_GameplayDefault.FindAction("BuildModeEnable", throwIfNotFound: true);
+        m_GameplayDefault_BuildMenu = m_GameplayDefault.FindAction("BuildMenu", throwIfNotFound: true);
         // Build
         m_Build = asset.FindActionMap("Build", throwIfNotFound: true);
         m_Build_PlaceStructure = m_Build.FindAction("PlaceStructure", throwIfNotFound: true);
         m_Build_StructureRotation = m_Build.FindAction("StructureRotation", throwIfNotFound: true);
         m_Build_BuildModeDisable = m_Build.FindAction("BuildModeDisable", throwIfNotFound: true);
+        m_Build_BuildMenu = m_Build.FindAction("BuildMenu", throwIfNotFound: true);
+        m_Build_Move = m_Build.FindAction("Move", throwIfNotFound: true);
+        // BuildMenu
+        m_BuildMenu = asset.FindActionMap("BuildMenu", throwIfNotFound: true);
+        m_BuildMenu_CloseMenu = m_BuildMenu.FindAction("CloseMenu", throwIfNotFound: true);
     }
 
     ~@Input()
     {
         UnityEngine.Debug.Assert(!m_GameplayDefault.enabled, "This will cause a leak and performance issues, Input.GameplayDefault.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Build.enabled, "This will cause a leak and performance issues, Input.Build.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_BuildMenu.enabled, "This will cause a leak and performance issues, Input.BuildMenu.Disable() has not been called.");
     }
 
     /// <summary>
@@ -419,7 +559,7 @@ public partial class @Input: IInputActionCollection2, IDisposable
     private readonly InputAction m_GameplayDefault_Move;
     private readonly InputAction m_GameplayDefault_Jump;
     private readonly InputAction m_GameplayDefault_Sprint;
-    private readonly InputAction m_GameplayDefault_BuildModeEnable;
+    private readonly InputAction m_GameplayDefault_BuildMenu;
     /// <summary>
     /// Provides access to input actions defined in input action map "GameplayDefault".
     /// </summary>
@@ -448,9 +588,9 @@ public partial class @Input: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Sprint => m_Wrapper.m_GameplayDefault_Sprint;
         /// <summary>
-        /// Provides access to the underlying input action "GameplayDefault/BuildModeEnable".
+        /// Provides access to the underlying input action "GameplayDefault/BuildMenu".
         /// </summary>
-        public InputAction @BuildModeEnable => m_Wrapper.m_GameplayDefault_BuildModeEnable;
+        public InputAction @BuildMenu => m_Wrapper.m_GameplayDefault_BuildMenu;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -489,9 +629,9 @@ public partial class @Input: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
-            @BuildModeEnable.started += instance.OnBuildModeEnable;
-            @BuildModeEnable.performed += instance.OnBuildModeEnable;
-            @BuildModeEnable.canceled += instance.OnBuildModeEnable;
+            @BuildMenu.started += instance.OnBuildMenu;
+            @BuildMenu.performed += instance.OnBuildMenu;
+            @BuildMenu.canceled += instance.OnBuildMenu;
         }
 
         /// <summary>
@@ -515,9 +655,9 @@ public partial class @Input: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
-            @BuildModeEnable.started -= instance.OnBuildModeEnable;
-            @BuildModeEnable.performed -= instance.OnBuildModeEnable;
-            @BuildModeEnable.canceled -= instance.OnBuildModeEnable;
+            @BuildMenu.started -= instance.OnBuildMenu;
+            @BuildMenu.performed -= instance.OnBuildMenu;
+            @BuildMenu.canceled -= instance.OnBuildMenu;
         }
 
         /// <summary>
@@ -558,6 +698,8 @@ public partial class @Input: IInputActionCollection2, IDisposable
     private readonly InputAction m_Build_PlaceStructure;
     private readonly InputAction m_Build_StructureRotation;
     private readonly InputAction m_Build_BuildModeDisable;
+    private readonly InputAction m_Build_BuildMenu;
+    private readonly InputAction m_Build_Move;
     /// <summary>
     /// Provides access to input actions defined in input action map "Build".
     /// </summary>
@@ -581,6 +723,14 @@ public partial class @Input: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Build/BuildModeDisable".
         /// </summary>
         public InputAction @BuildModeDisable => m_Wrapper.m_Build_BuildModeDisable;
+        /// <summary>
+        /// Provides access to the underlying input action "Build/BuildMenu".
+        /// </summary>
+        public InputAction @BuildMenu => m_Wrapper.m_Build_BuildMenu;
+        /// <summary>
+        /// Provides access to the underlying input action "Build/Move".
+        /// </summary>
+        public InputAction @Move => m_Wrapper.m_Build_Move;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -616,6 +766,12 @@ public partial class @Input: IInputActionCollection2, IDisposable
             @BuildModeDisable.started += instance.OnBuildModeDisable;
             @BuildModeDisable.performed += instance.OnBuildModeDisable;
             @BuildModeDisable.canceled += instance.OnBuildModeDisable;
+            @BuildMenu.started += instance.OnBuildMenu;
+            @BuildMenu.performed += instance.OnBuildMenu;
+            @BuildMenu.canceled += instance.OnBuildMenu;
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
         }
 
         /// <summary>
@@ -636,6 +792,12 @@ public partial class @Input: IInputActionCollection2, IDisposable
             @BuildModeDisable.started -= instance.OnBuildModeDisable;
             @BuildModeDisable.performed -= instance.OnBuildModeDisable;
             @BuildModeDisable.canceled -= instance.OnBuildModeDisable;
+            @BuildMenu.started -= instance.OnBuildMenu;
+            @BuildMenu.performed -= instance.OnBuildMenu;
+            @BuildMenu.canceled -= instance.OnBuildMenu;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
         }
 
         /// <summary>
@@ -669,6 +831,102 @@ public partial class @Input: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="BuildActions" /> instance referencing this action map.
     /// </summary>
     public BuildActions @Build => new BuildActions(this);
+
+    // BuildMenu
+    private readonly InputActionMap m_BuildMenu;
+    private List<IBuildMenuActions> m_BuildMenuActionsCallbackInterfaces = new List<IBuildMenuActions>();
+    private readonly InputAction m_BuildMenu_CloseMenu;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "BuildMenu".
+    /// </summary>
+    public struct BuildMenuActions
+    {
+        private @Input m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public BuildMenuActions(@Input wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "BuildMenu/CloseMenu".
+        /// </summary>
+        public InputAction @CloseMenu => m_Wrapper.m_BuildMenu_CloseMenu;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_BuildMenu; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="BuildMenuActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(BuildMenuActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="BuildMenuActions" />
+        public void AddCallbacks(IBuildMenuActions instance)
+        {
+            if (instance == null || m_Wrapper.m_BuildMenuActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_BuildMenuActionsCallbackInterfaces.Add(instance);
+            @CloseMenu.started += instance.OnCloseMenu;
+            @CloseMenu.performed += instance.OnCloseMenu;
+            @CloseMenu.canceled += instance.OnCloseMenu;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="BuildMenuActions" />
+        private void UnregisterCallbacks(IBuildMenuActions instance)
+        {
+            @CloseMenu.started -= instance.OnCloseMenu;
+            @CloseMenu.performed -= instance.OnCloseMenu;
+            @CloseMenu.canceled -= instance.OnCloseMenu;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="BuildMenuActions.UnregisterCallbacks(IBuildMenuActions)" />.
+        /// </summary>
+        /// <seealso cref="BuildMenuActions.UnregisterCallbacks(IBuildMenuActions)" />
+        public void RemoveCallbacks(IBuildMenuActions instance)
+        {
+            if (m_Wrapper.m_BuildMenuActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="BuildMenuActions.AddCallbacks(IBuildMenuActions)" />
+        /// <seealso cref="BuildMenuActions.RemoveCallbacks(IBuildMenuActions)" />
+        /// <seealso cref="BuildMenuActions.UnregisterCallbacks(IBuildMenuActions)" />
+        public void SetCallbacks(IBuildMenuActions instance)
+        {
+            foreach (var item in m_Wrapper.m_BuildMenuActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_BuildMenuActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="BuildMenuActions" /> instance referencing this action map.
+    /// </summary>
+    public BuildMenuActions @BuildMenu => new BuildMenuActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "GameplayDefault" which allows adding and removing callbacks.
     /// </summary>
@@ -705,12 +963,12 @@ public partial class @Input: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSprint(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "BuildModeEnable" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "BuildMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnBuildModeEnable(InputAction.CallbackContext context);
+        void OnBuildMenu(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Build" which allows adding and removing callbacks.
@@ -740,5 +998,34 @@ public partial class @Input: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnBuildModeDisable(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "BuildMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnBuildMenu(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMove(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "BuildMenu" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="BuildMenuActions.AddCallbacks(IBuildMenuActions)" />
+    /// <seealso cref="BuildMenuActions.RemoveCallbacks(IBuildMenuActions)" />
+    public interface IBuildMenuActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "CloseMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCloseMenu(InputAction.CallbackContext context);
     }
 }

@@ -68,9 +68,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Survival::StructurePivotInfo
   Structure: {fileID: 4767902385425070356}
-  EnableCheckRaycastCenter: {x: 0.5, y: 0, z: 0}
-  EnableCheckRaycastDirection: {x: 1, y: 0, z: 0}
-  EnableCheckRaycastDistance: 0.05
 --- !u!1 &287765245175726529
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,9 +136,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Survival::StructurePivotInfo
   Structure: {fileID: 4767902385425070356}
-  EnableCheckRaycastCenter: {x: 0, y: 0, z: 0}
-  EnableCheckRaycastDirection: {x: 0, y: 0, z: 0}
-  EnableCheckRaycastDistance: 0.05
 --- !u!1 &658863187443012341
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,9 +204,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Survival::StructurePivotInfo
   Structure: {fileID: 4767902385425070356}
-  EnableCheckRaycastCenter: {x: 0, y: 0, z: 0.5}
-  EnableCheckRaycastDirection: {x: 0, y: 0, z: 1}
-  EnableCheckRaycastDistance: 0.05
 --- !u!1 &1962352707551732864
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,9 +272,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Survival::StructurePivotInfo
   Structure: {fileID: 4767902385425070356}
-  EnableCheckRaycastCenter: {x: 0, y: 0, z: -0.5}
-  EnableCheckRaycastDirection: {x: 0, y: 0, z: -1}
-  EnableCheckRaycastDistance: 0.05
 --- !u!1 &4567113200883880648
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,9 +340,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Survival::StructurePivotInfo
   Structure: {fileID: 4767902385425070356}
-  EnableCheckRaycastCenter: {x: 0, y: 0, z: -0.5}
-  EnableCheckRaycastDirection: {x: 0, y: 0, z: -1}
-  EnableCheckRaycastDistance: 0.05
 --- !u!1 &4935932698062844322
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,9 +408,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Survival::StructurePivotInfo
   Structure: {fileID: 4767902385425070356}
-  EnableCheckRaycastCenter: {x: -0.5, y: 0, z: 0}
-  EnableCheckRaycastDirection: {x: -1, y: 0, z: 0}
-  EnableCheckRaycastDistance: 0.05
 --- !u!1 &6168801637865341669
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,9 +529,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Survival::StructurePivotInfo
   Structure: {fileID: 4767902385425070356}
-  EnableCheckRaycastCenter: {x: 0, y: 0, z: 0.5}
-  EnableCheckRaycastDirection: {x: 0, y: 0, z: 1}
-  EnableCheckRaycastDistance: 0.05
 --- !u!1 &6923059953689673209
 GameObject:
   m_ObjectHideFlags: 0
@@ -657,9 +636,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Survival::StructurePivotInfo
   Structure: {fileID: 4767902385425070356}
-  EnableCheckRaycastCenter: {x: 0, y: 0, z: 0}
-  EnableCheckRaycastDirection: {x: 0, y: 0, z: 0}
-  EnableCheckRaycastDistance: 0.05
 --- !u!1 &7682709089038368180
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,6 +736,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8098537904518165666}
   - component: {fileID: 4767902385425070356}
+  - component: {fileID: -8467928822659489210}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -797,12 +774,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3225104e13205143abb070bbc08d3a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  Pivots:
-  - {fileID: 2710022661839938736}
-  - {fileID: 7233112534430347768}
-  - {fileID: 8089312950731628008}
-  - {fileID: 360447615654272953}
-  - {fileID: 5613816705362412685}
-  - {fileID: 9138589020743130488}
-  - {fileID: 6318849205499069708}
-  - {fileID: 2271663187005033937}
+--- !u!114 &-8467928822659489210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8124470848002630196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Mirror::Mirror.NetworkIdentity
+  sceneId: 0
+  _assetId: 3854510067
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0
