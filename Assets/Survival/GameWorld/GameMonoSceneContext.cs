@@ -12,5 +12,9 @@ public class GameMonoSceneContext : MonoInstaller
             .Bind<BuildSystem>()
             .FromInstance(BuildSystem)
             .AsSingle();
+
+        Container
+            .Bind<ResourceBank>()
+            .AsSingle();
     }
 }

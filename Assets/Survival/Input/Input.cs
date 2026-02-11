@@ -254,6 +254,15 @@ public partial class @Input: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""DestroyStructure"",
+                    ""type"": ""Button"",
+                    ""id"": ""6dde42d5-b54a-47f9-8182-50488cf75c38"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""StructureRotation"",
                     ""type"": ""Value"",
                     ""id"": ""4dbc0742-7e71-47cd-870b-d84c3151f108"",
@@ -400,6 +409,17 @@ public partial class @Input: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7227ab0f-19fb-4f0c-9d50-1d4d68ce98c0"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DestroyStructure"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -466,6 +486,7 @@ public partial class @Input: IInputActionCollection2, IDisposable
         // Build
         m_Build = asset.FindActionMap("Build", throwIfNotFound: true);
         m_Build_PlaceStructure = m_Build.FindAction("PlaceStructure", throwIfNotFound: true);
+        m_Build_DestroyStructure = m_Build.FindAction("DestroyStructure", throwIfNotFound: true);
         m_Build_StructureRotation = m_Build.FindAction("StructureRotation", throwIfNotFound: true);
         m_Build_BuildModeDisable = m_Build.FindAction("BuildModeDisable", throwIfNotFound: true);
         m_Build_BuildMenu = m_Build.FindAction("BuildMenu", throwIfNotFound: true);
@@ -696,6 +717,7 @@ public partial class @Input: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Build;
     private List<IBuildActions> m_BuildActionsCallbackInterfaces = new List<IBuildActions>();
     private readonly InputAction m_Build_PlaceStructure;
+    private readonly InputAction m_Build_DestroyStructure;
     private readonly InputAction m_Build_StructureRotation;
     private readonly InputAction m_Build_BuildModeDisable;
     private readonly InputAction m_Build_BuildMenu;
@@ -715,6 +737,10 @@ public partial class @Input: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Build/PlaceStructure".
         /// </summary>
         public InputAction @PlaceStructure => m_Wrapper.m_Build_PlaceStructure;
+        /// <summary>
+        /// Provides access to the underlying input action "Build/DestroyStructure".
+        /// </summary>
+        public InputAction @DestroyStructure => m_Wrapper.m_Build_DestroyStructure;
         /// <summary>
         /// Provides access to the underlying input action "Build/StructureRotation".
         /// </summary>
@@ -760,6 +786,9 @@ public partial class @Input: IInputActionCollection2, IDisposable
             @PlaceStructure.started += instance.OnPlaceStructure;
             @PlaceStructure.performed += instance.OnPlaceStructure;
             @PlaceStructure.canceled += instance.OnPlaceStructure;
+            @DestroyStructure.started += instance.OnDestroyStructure;
+            @DestroyStructure.performed += instance.OnDestroyStructure;
+            @DestroyStructure.canceled += instance.OnDestroyStructure;
             @StructureRotation.started += instance.OnStructureRotation;
             @StructureRotation.performed += instance.OnStructureRotation;
             @StructureRotation.canceled += instance.OnStructureRotation;
@@ -786,6 +815,9 @@ public partial class @Input: IInputActionCollection2, IDisposable
             @PlaceStructure.started -= instance.OnPlaceStructure;
             @PlaceStructure.performed -= instance.OnPlaceStructure;
             @PlaceStructure.canceled -= instance.OnPlaceStructure;
+            @DestroyStructure.started -= instance.OnDestroyStructure;
+            @DestroyStructure.performed -= instance.OnDestroyStructure;
+            @DestroyStructure.canceled -= instance.OnDestroyStructure;
             @StructureRotation.started -= instance.OnStructureRotation;
             @StructureRotation.performed -= instance.OnStructureRotation;
             @StructureRotation.canceled -= instance.OnStructureRotation;
@@ -984,6 +1016,13 @@ public partial class @Input: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPlaceStructure(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DestroyStructure" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDestroyStructure(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "StructureRotation" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

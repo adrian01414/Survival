@@ -11,12 +11,14 @@ public class GameBootstrap : MonoBehaviour
     private LobbyInfo _lobbyInfo;
     private GameManager _gameManager;
     private NetworkManager _networkManager;
+    private ResourceBank _resourceBank;
 
     [Inject]
-    public void Construct(LobbyInfo lobbyInfo, GameManager gameManager)
+    public void Construct(LobbyInfo lobbyInfo, GameManager gameManager, ResourceBank resourceBank)
     {
         _lobbyInfo = lobbyInfo;
         _gameManager = gameManager;
+        _resourceBank = resourceBank;
     }
 
     private void Awake()
@@ -35,5 +37,7 @@ public class GameBootstrap : MonoBehaviour
     private void Start()
     {
         _gameManager.State = GameState.GameplayDefault;
+
+        _resourceBank.SetResource<WoodResource>(100);
     }
 }

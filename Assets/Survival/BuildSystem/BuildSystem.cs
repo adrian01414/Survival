@@ -1,12 +1,16 @@
 using Mirror;
+using ModestTree;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
 public class BuildSystem : NetworkBehaviour
 {
+    public event Action<StructureInfo> OnStructurePlaced;
+    public event Action<Structure> OnStructureDestroyed;
+
     private static int _structureID = 0;
 
     public float PreviewDistance = 5f;
@@ -27,26 +31,31 @@ public class BuildSystem : NetworkBehaviour
 
     private StructureInfo _currentStructureInfo = null;
     private StructurePreview _currentStructurePreview = null;
+    private Structure _currentSelectedStructure = null;
     private Camera _camera;
     private int _structurePivotLayer;
     private Quaternion _previewRotation = Quaternion.identity;
 
     private bool _enabled = false;
+    private bool _availableForPlace = true;
 
     private InputManager _inputManager;
     private GameManager _gameManager;
+    private ResourceBank _resourceBank;
 
     [Inject]
-    public void Construct(InputManager inputManager, GameManager gameManager)
+    public void Construct(InputManager inputManager, GameManager gameManager, ResourceBank resourceBank)
     {
         _inputManager = inputManager;
         _gameManager = gameManager;
+        _resourceBank = resourceBank;
     }
 
     private void OnEnable()
     {
         _inputManager.BuildPlaceStructure.performed += PlaceStructurePerformed;
         _inputManager.BuildStructureRotation.performed += RotateStrucurePerformed;
+        _inputManager.BuildDestroyStructure.performed += DestroyStructurePerformed;
 
         _gameManager.OnGameStateChanged += ChangeBuildAvailable;
     }
@@ -59,73 +68,81 @@ public class BuildSystem : NetworkBehaviour
 
     private void Update()
     {
-        if(_enabled && _currentStructurePreview)
+        SetPreviewPositionAndRotation();
+        CheckAvailableForPlace();
+    }
+
+    private void CheckAvailableForPlace()
+    {
+        if (!_currentStructureInfo) return;
+        bool resourceAvailable = true;
+        foreach(var cost in _currentStructureInfo.Cost)
         {
-            Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-
-            Vector3 previewPosition = Vector3.zero;
-            Quaternion previewRotation = _previewRotation;
-
-            if (Physics.Raycast(ray, out var hit, PreviewDistance, LayerMask))
+            if (_resourceBank.Resources[cost.ResourceType] - cost.Amount < 0)
             {
-                Vector3 previewOffset = Vector3.Scale(hit.normal, _currentStructurePreview.transform.localScale) / 2f;
-                previewPosition = hit.point + previewOffset;
-                if (hit.collider.gameObject.layer == _structurePivotLayer)
-                {
-                    var pivotInfo = hit.collider.GetComponent<StructurePivotInfo>();
-                    Vector3 direction = pivotInfo.Direction;
-                    previewRotation = pivotInfo.Structure.transform.rotation;
-                    if (_currentStructureInfo.Structure is Floor)
-                    {
-                        if(pivotInfo.Structure is Floor)
-                        {
-                            direction.y = 0f;
-                            Vector3 worldDirection = pivotInfo.Structure.transform.TransformDirection(direction);
-                            previewOffset = Vector3.Scale(worldDirection, _currentStructurePreview.transform.localScale);
-                        }
-                        else if(pivotInfo.Structure is Wall)
-                        {
-                            direction.x = 0f;
-                            Vector3 worldDirection = pivotInfo.Structure.transform.TransformDirection(direction);
-                            previewOffset = Vector3.Scale(worldDirection, _currentStructurePreview.transform.localScale / 2f);
-                            previewOffset.y = pivotInfo.Direction.y * pivotInfo.Structure.transform.localScale.y / 2f -
-                                _currentStructurePreview.transform.localScale.y / 2f;
-                        }
-                    } else if(_currentStructureInfo.Structure is Wall)
-                    {
-                        if (pivotInfo.Structure is Wall)
-                        {
-                            direction.z = 0f;
-                            if (direction.x != 0f && direction.y != 0f)
-                            {
-                                direction.y = 0f;
-                            }
-                            Vector3 worldDirection = pivotInfo.Structure.transform.TransformDirection(direction);
-                            previewOffset = Vector3.Scale(worldDirection, _currentStructurePreview.transform.localScale);
-                            previewOffset.x = worldDirection.x * _currentStructurePreview.transform.localScale.x;
-                            previewOffset.z = worldDirection.z * _currentStructurePreview.transform.localScale.x;
-                        } else if(pivotInfo.Structure is Floor)
-                        {
-                            Vector3 worldDirection = pivotInfo.Structure.transform.TransformDirection(direction);
-                            previewOffset = Vector3.Scale(worldDirection, pivotInfo.Structure.transform.localScale / 2f);
-                            previewOffset.y = pivotInfo.Direction.y * _currentStructurePreview.transform.localScale.y / 2f + 
-                                pivotInfo.Structure.transform.localScale.y / 2f;
-                            if(pivotInfo.Direction.x != 0f)
-                            {
-                                previewRotation = Quaternion.Euler(previewRotation.eulerAngles + new Vector3(0f, 90 * pivotInfo.Direction.x, 0f));
-                            }
-                        }
-                    }
-
-                    previewPosition = pivotInfo.Structure.transform.position + previewOffset;
-                }
-            } else
-            {
-                previewPosition = ray.origin + ray.direction * PreviewDistance;
+                resourceAvailable = false;
+                break;
             }
-            _currentStructurePreview.transform.position = previewPosition;
-            _currentStructurePreview.transform.rotation = previewRotation;
         }
+        _availableForPlace = resourceAvailable;
+        _currentStructurePreview.ChangePreviewMaterial(resourceAvailable);
+    }
+
+    private Dictionary<Collider, StructurePivotInfo> pivotInfoCache = new Dictionary<Collider, StructurePivotInfo>();
+    private StructurePivotInfo GetCachedPivotInfo(Collider collider)
+    {
+        if (!pivotInfoCache.TryGetValue(collider, out var pivotInfo))
+        {
+            pivotInfo = collider.GetComponent<StructurePivotInfo>();
+            if (pivotInfo != null)
+            {
+                pivotInfoCache[collider] = pivotInfo;
+            }
+        }
+        return pivotInfo;
+    }
+
+    private void SetPreviewPositionAndRotation()
+    {
+        if (!_enabled) return;
+
+        Vector3 previewPosition = Vector3.zero;
+        Quaternion previewRotation = _previewRotation;
+
+        Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+
+        if (Physics.Raycast(ray, out var hit, PreviewDistance, LayerMask))
+        {
+            Vector3 previewOffset = Vector3.Scale(hit.normal, _currentStructurePreview.transform.localScale) / 2f;
+            previewPosition = hit.point + previewOffset;
+            if (hit.collider.gameObject.layer == _structurePivotLayer)
+            {
+                var pivotInfo = GetCachedPivotInfo(hit.collider);
+
+                if (pivotInfo.Structure != _currentSelectedStructure)
+                {
+                    _currentSelectedStructure = pivotInfo.Structure;
+                }
+
+                previewRotation = pivotInfo.Structure.transform.rotation;
+                previewOffset = pivotInfo.Structure.CalculatePreviewOffset(_currentStructureInfo.Structure, pivotInfo);
+
+                if (_currentStructureInfo.Structure is Wall && pivotInfo.Structure is Floor && pivotInfo.Direction.x != 0f)
+                {
+                    previewRotation = Quaternion.Euler(previewRotation.eulerAngles + new Vector3(0f, 90 * pivotInfo.Direction.x, 0f));
+                }
+
+                previewPosition = pivotInfo.Structure.transform.position + previewOffset;
+            }
+        }
+        else
+        {
+            _currentSelectedStructure = null;
+            previewPosition = ray.origin + ray.direction * PreviewDistance;
+        }
+
+        _currentStructurePreview.transform.position = previewPosition;
+        _currentStructurePreview.transform.rotation = previewRotation;
     }
 
     private void RotateStructure(int direction)
@@ -134,7 +151,7 @@ public class BuildSystem : NetworkBehaviour
         _previewRotation = Quaternion.Euler(_previewRotation.eulerAngles + rotation);
     }
 
-    private void TryPlaceStructure(int prefabIndex, Vector3 position, Quaternion rotation)
+    private void PlaceStructure(int prefabIndex, Vector3 position, Quaternion rotation)
     {
         var prefab = NetworkManager.singleton.spawnPrefabs[prefabIndex];
 
@@ -149,22 +166,57 @@ public class BuildSystem : NetworkBehaviour
     [Command(requiresAuthority = false)]
     private void CmdPlaceStructure(int prefabIndex, Vector3 position, Quaternion rotation)
     {
-        TryPlaceStructure(prefabIndex, position, rotation);
+        PlaceStructure(prefabIndex, position, rotation);
     }
 
     private void PlaceStructurePerformed(InputAction.CallbackContext callback)
     {
-        if(!_enabled || !_currentStructureInfo || !_currentStructurePreview || !_currentStructurePreview.AvailableForPlace) return;
+        if(!_enabled || !_currentStructureInfo || !_currentStructurePreview || !_availableForPlace) return;
 
         int prefabIndex = NetworkManager.singleton.spawnPrefabs.IndexOf(_currentStructureInfo.Structure.gameObject);
         if (NetworkServer.active)
         {
-            TryPlaceStructure(prefabIndex, _currentStructurePreview.transform.position, _currentStructurePreview.transform.rotation);
+            PlaceStructure(prefabIndex, _currentStructurePreview.transform.position, _currentStructurePreview.transform.rotation);
         }
         else
         {
             CmdPlaceStructure(prefabIndex, _currentStructurePreview.transform.position, _currentStructurePreview.transform.rotation);
         }
+
+        OnStructurePlaced?.Invoke(CurrentStructureInfo);
+    }
+
+    private void RemoveStructure(uint netId)
+    {
+        var structure = NetworkServer.spawned[netId].gameObject;
+
+        Destroy(structure);
+        
+        NetworkServer.UnSpawn(structure);
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdRemoveStructure(uint netId)
+    {
+        RemoveStructure(netId);
+    }
+
+    private void DestroyStructurePerformed(InputAction.CallbackContext callback)
+    {
+        if (!_enabled) return;
+
+        uint netid = _currentSelectedStructure.GetComponent<NetworkIdentity>().netId;
+
+        if (NetworkServer.active)
+        {
+            RemoveStructure(netid);
+        }
+        else
+        {
+            CmdRemoveStructure(netid);
+        }
+
+        OnStructureDestroyed?.Invoke(_currentSelectedStructure);
     }
 
     private void RotateStrucurePerformed(InputAction.CallbackContext callback)
@@ -187,7 +239,6 @@ public class BuildSystem : NetworkBehaviour
         if (_currentStructurePreview)
         {
             Destroy(_currentStructurePreview.gameObject);
-            _currentStructurePreview = null;
         }
 
         _currentStructurePreview = Instantiate(CurrentStructureInfo.StructurePreview, transform);
@@ -198,6 +249,7 @@ public class BuildSystem : NetworkBehaviour
     {
         _inputManager.BuildPlaceStructure.performed -= PlaceStructurePerformed;
         _inputManager.BuildStructureRotation.performed -= RotateStrucurePerformed;
+        _inputManager.BuildDestroyStructure.performed -= DestroyStructurePerformed;
 
         _gameManager.OnGameStateChanged -= ChangeBuildAvailable;
     }

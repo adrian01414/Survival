@@ -13,27 +13,9 @@ public class StructurePreview : MonoBehaviour
 
     private MeshRenderer _meshRenderer;
 
-    private event Action<bool> OnAvailableForPlaceChanged;
-    private bool _availableForPlace = true;
-    public bool AvailableForPlace
-    {
-        get => _availableForPlace;
-        set
-        {
-            _availableForPlace = value;
-            OnAvailableForPlaceChanged?.Invoke(value);
-        }
-    }
-
-    private void OnEnable() => OnAvailableForPlaceChanged += ChangePreviewMaterial;
-
     private void Awake() => _meshRenderer = GetComponent<MeshRenderer>();
 
-    private void ChangePreviewMaterial(bool availableForPlace) => _meshRenderer.material = availableForPlace ? GreenMaterial : RedMaterial;
-
-    // check overlap box collisions
-
-    private void OnDisable() => OnAvailableForPlaceChanged -= ChangePreviewMaterial;
+    public void ChangePreviewMaterial(bool availableForPlace) => _meshRenderer.material = availableForPlace ? GreenMaterial : RedMaterial;
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()

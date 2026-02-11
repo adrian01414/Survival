@@ -490,8 +490,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  prefabsForRegister:
-  - {fileID: 8124470848002630196, guid: d5dc4429b8acc8d4cbdd4c1cbd06fbe4, type: 3}
   PreviewDistance: 7
   LayerMask:
     serializedVersion: 2

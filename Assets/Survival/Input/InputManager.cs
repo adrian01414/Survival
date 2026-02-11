@@ -18,6 +18,7 @@ public class InputManager : IInitializable, IDisposable, ITickable
 
     // Build
     public InputAction BuildPlaceStructure { get; private set; }
+    public InputAction BuildDestroyStructure { get; private set; }
     public InputAction BuildStructureRotation { get; private set; }
     public InputAction Build_BuildModeDisable { get; private set; }
     public InputAction Build_BuildMenu { get; private set; }
@@ -55,6 +56,7 @@ public class InputManager : IInitializable, IDisposable, ITickable
         BuildStructureRotation = _input.Build.StructureRotation;
         Build_BuildModeDisable = _input.Build.BuildModeDisable;
         Build_BuildMenu = _input.Build.BuildMenu;
+        BuildDestroyStructure = _input.Build.DestroyStructure;
         _inputActionMaps.Add(_input.Build.Get());
         _input.Build.Disable();
     }
