@@ -2,9 +2,11 @@ using Mirror;
 using ModestTree;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class BuildSystem : NetworkBehaviour
 {
@@ -74,18 +76,26 @@ public class BuildSystem : NetworkBehaviour
 
     private void CheckAvailableForPlace()
     {
+        // resource check
         if (!_currentStructureInfo) return;
-        bool resourceAvailable = true;
+        bool available = true;
         foreach(var cost in _currentStructureInfo.Cost)
         {
             if (_resourceBank.Resources[cost.ResourceType] - cost.Amount < 0)
             {
-                resourceAvailable = false;
+                available = false;
                 break;
             }
         }
-        _availableForPlace = resourceAvailable;
-        _currentStructurePreview.ChangePreviewMaterial(resourceAvailable);
+
+        // collider check
+        if(Physics.CheckSphere(_currentStructurePreview.transform.position, 0.01f))
+        {
+            available = false;
+        }
+
+        _availableForPlace = available;
+        _currentStructurePreview.ChangePreviewMaterial(available);
     }
 
     private Dictionary<Collider, StructurePivotInfo> pivotInfoCache = new Dictionary<Collider, StructurePivotInfo>();
@@ -205,15 +215,14 @@ public class BuildSystem : NetworkBehaviour
     {
         if (!_enabled) return;
 
-        uint netid = _currentSelectedStructure.GetComponent<NetworkIdentity>().netId;
-
+        uint structureNetId = _currentSelectedStructure.GetComponent<NetworkIdentity>().netId;
         if (NetworkServer.active)
         {
-            RemoveStructure(netid);
+            RemoveStructure(structureNetId);
         }
         else
         {
-            CmdRemoveStructure(netid);
+            CmdRemoveStructure(structureNetId);
         }
 
         OnStructureDestroyed?.Invoke(_currentSelectedStructure);

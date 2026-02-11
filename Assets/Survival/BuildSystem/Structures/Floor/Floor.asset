@@ -15,4 +15,5 @@ MonoBehaviour:
   Structure: {fileID: 4767902385425070356, guid: d5dc4429b8acc8d4cbdd4c1cbd06fbe4, type: 3}
   StructurePreview: {fileID: 3770974813823952553, guid: 3cdfcd818b97a44459ff10352bdd0497, type: 3}
   Cost:
-  - amount: 0
+  - ResourceTypeEnum: 0
+    Amount: 10

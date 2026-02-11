@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Survival::StructureInfo
   Structure: {fileID: 3026548337150863158, guid: 6b7808dfdace3c0429bcb77caf7e794e, type: 3}
   StructurePreview: {fileID: -8041237086134027298, guid: f5313263c429a234283e07a7503069c4, type: 3}
+  Cost:
+  - ResourceTypeEnum: 0
+    Amount: 10
