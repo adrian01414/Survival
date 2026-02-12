@@ -4,5 +4,7 @@ using UnityEngine;
 
 public abstract class Structure : MonoBehaviour
 {
+    public Transform SizePivot;
+
     public abstract Vector3 CalculatePreviewOffset(Structure preview, StructurePivotInfo pivotInfo);
 }

@@ -1,15 +1,20 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshRenderer))]
 public class StructurePreview : MonoBehaviour
 {
+    public List<MeshRenderer> MeshRenderers;
+    public Transform SizePivot;
+
     public Material GreenMaterial;
     public Material RedMaterial;
 
-    private MeshRenderer _meshRenderer;
-
-    private void Awake() => _meshRenderer = GetComponent<MeshRenderer>();
-
-    public void ChangePreviewMaterial(bool availableForPlace) => _meshRenderer.material = availableForPlace ? GreenMaterial : RedMaterial;
+    public void ChangePreviewMaterial(bool availableForPlace)
+    {
+        foreach (var renderer in MeshRenderers)
+        {
+            renderer.material = availableForPlace ? GreenMaterial : RedMaterial;
+        }
+    }
 }

@@ -37,11 +37,11 @@ public class SteamLobby : MonoBehaviour
         print("Lobby created");
 
         SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby),
-            Keys.LobbyDataKeys.HostAddressKey,
+            Keys.LobbyDataKeys.HostAddress,
             SteamUser.GetSteamID().ToString());
 
         SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby),
-            Keys.LobbyDataKeys.SceneNameKey,
+            Keys.LobbyDataKeys.SceneName,
             SceneManager.GetActiveScene().name);
 
         _networkManager.maxConnections = SteamMatchmaking.GetLobbyMemberLimit(new CSteamID(callback.m_ulSteamIDLobby)) - 1;
@@ -58,9 +58,9 @@ public class SteamLobby : MonoBehaviour
     {
         if (NetworkServer.active) return;
 
-        SceneManager.LoadScene(SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), Keys.LobbyDataKeys.SceneNameKey));
+        SceneManager.LoadScene(SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), Keys.LobbyDataKeys.SceneName));
 
-        _networkManager.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), Keys.LobbyDataKeys.HostAddressKey);
+        _networkManager.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), Keys.LobbyDataKeys.HostAddress);
         _networkManager.StartClient();
     }
 }

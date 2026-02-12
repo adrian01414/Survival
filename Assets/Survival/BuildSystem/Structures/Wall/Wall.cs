@@ -15,17 +15,17 @@ public class Wall : Structure
                 direction.y = 0f;
             }
             Vector3 worldDirection = transform.TransformDirection(direction);
-            result = Vector3.Scale(worldDirection, preview.transform.localScale);
-            result.x = worldDirection.x * preview.transform.localScale.x;
-            result.z = worldDirection.z * preview.transform.localScale.x;
+            result = Vector3.Scale(worldDirection, preview.SizePivot.transform.localScale);
+            result.x = worldDirection.x * preview.SizePivot.transform.localScale.x;
+            result.z = worldDirection.z * preview.SizePivot.transform.localScale.x;
         }
         else if (preview is Floor)
         {
             direction.x = 0f;
                 Vector3 worldDirection = transform.TransformDirection(direction);
-                result = Vector3.Scale(worldDirection, preview.transform.localScale / 2f);
-                result.y = direction.y * transform.localScale.y / 2f -
-                    preview.transform.localScale.y / 2f;
+                result = Vector3.Scale(worldDirection, preview.SizePivot.transform.localScale / 2f);
+                result.y = direction.y * SizePivot.transform.localScale.y / 2f -
+                    preview.SizePivot.transform.localScale.y / 2f;
         }
 
         return result;

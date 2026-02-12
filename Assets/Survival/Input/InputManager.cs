@@ -12,6 +12,7 @@ public class InputManager : IInitializable, IDisposable, ITickable
     public InputAction GameplayDefault_BuildMenu { get; private set; }
     public InputAction GameplayDefault_Jump { get; private set; }
     public InputAction GameplayDefault_Sprint { get; private set; }
+    public InputAction GameplayDefault_Interact { get; private set; }
 
     // Build Menu
     public InputAction BuildMenu_CloseMenu { get; private set; }
@@ -43,6 +44,7 @@ public class InputManager : IInitializable, IDisposable, ITickable
         GameplayDefault_BuildMenu = _input.GameplayDefault.BuildMenu;
         GameplayDefault_Jump = _input.GameplayDefault.Jump;
         GameplayDefault_Sprint = _input.GameplayDefault.Sprint;
+        GameplayDefault_Interact = _input.GameplayDefault.Interact;
         _inputActionMaps.Add(_input.GameplayDefault.Get());
         _input.GameplayDefault.Disable();
 

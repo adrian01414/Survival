@@ -14,13 +14,13 @@ public class Floor : Structure
         {
             direction.y = 0f;
             Vector3 worldDirection = transform.TransformDirection(direction);
-            result = Vector3.Scale(worldDirection, preview.transform.localScale);
+            result = Vector3.Scale(worldDirection, preview.SizePivot.transform.localScale);
         } else if (preview is Wall)
         {
             Vector3 worldDirection = transform.TransformDirection(direction);
-            result = Vector3.Scale(worldDirection, transform.localScale / 2f);
-            result.y = direction.y * preview.transform.localScale.y / 2f +
-                transform.localScale.y / 2f;
+            result = Vector3.Scale(worldDirection, SizePivot.transform.localScale / 2f);
+            result.y = direction.y * preview.SizePivot.transform.localScale.y / 2f +
+                SizePivot.transform.localScale.y / 2f;
         }
 
         return result;

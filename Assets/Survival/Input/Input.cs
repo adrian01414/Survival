@@ -136,6 +136,15 @@ public partial class @Input: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""5ac9aadc-8677-4627-83dc-07571dfd9efd"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -235,6 +244,17 @@ public partial class @Input: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""BuildMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""803cb228-bcd8-401b-a651-f98aaaac3226"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -483,6 +503,7 @@ public partial class @Input: IInputActionCollection2, IDisposable
         m_GameplayDefault_Jump = m_GameplayDefault.FindAction("Jump", throwIfNotFound: true);
         m_GameplayDefault_Sprint = m_GameplayDefault.FindAction("Sprint", throwIfNotFound: true);
         m_GameplayDefault_BuildMenu = m_GameplayDefault.FindAction("BuildMenu", throwIfNotFound: true);
+        m_GameplayDefault_Interact = m_GameplayDefault.FindAction("Interact", throwIfNotFound: true);
         // Build
         m_Build = asset.FindActionMap("Build", throwIfNotFound: true);
         m_Build_PlaceStructure = m_Build.FindAction("PlaceStructure", throwIfNotFound: true);
@@ -581,6 +602,7 @@ public partial class @Input: IInputActionCollection2, IDisposable
     private readonly InputAction m_GameplayDefault_Jump;
     private readonly InputAction m_GameplayDefault_Sprint;
     private readonly InputAction m_GameplayDefault_BuildMenu;
+    private readonly InputAction m_GameplayDefault_Interact;
     /// <summary>
     /// Provides access to input actions defined in input action map "GameplayDefault".
     /// </summary>
@@ -612,6 +634,10 @@ public partial class @Input: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "GameplayDefault/BuildMenu".
         /// </summary>
         public InputAction @BuildMenu => m_Wrapper.m_GameplayDefault_BuildMenu;
+        /// <summary>
+        /// Provides access to the underlying input action "GameplayDefault/Interact".
+        /// </summary>
+        public InputAction @Interact => m_Wrapper.m_GameplayDefault_Interact;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -653,6 +679,9 @@ public partial class @Input: IInputActionCollection2, IDisposable
             @BuildMenu.started += instance.OnBuildMenu;
             @BuildMenu.performed += instance.OnBuildMenu;
             @BuildMenu.canceled += instance.OnBuildMenu;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         /// <summary>
@@ -679,6 +708,9 @@ public partial class @Input: IInputActionCollection2, IDisposable
             @BuildMenu.started -= instance.OnBuildMenu;
             @BuildMenu.performed -= instance.OnBuildMenu;
             @BuildMenu.canceled -= instance.OnBuildMenu;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         /// <summary>
@@ -1001,6 +1033,13 @@ public partial class @Input: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnBuildMenu(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInteract(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Build" which allows adding and removing callbacks.

@@ -1,12 +1,10 @@
 using Mirror;
-using ModestTree;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class BuildSystem : NetworkBehaviour
 {
@@ -76,7 +74,6 @@ public class BuildSystem : NetworkBehaviour
 
     private void CheckAvailableForPlace()
     {
-        // resource check
         if (!_currentStructureInfo) return;
         bool available = true;
         foreach(var cost in _currentStructureInfo.Cost)
@@ -88,7 +85,6 @@ public class BuildSystem : NetworkBehaviour
             }
         }
 
-        // collider check
         if(Physics.CheckSphere(_currentStructurePreview.transform.position, 0.01f))
         {
             available = false;
@@ -123,7 +119,7 @@ public class BuildSystem : NetworkBehaviour
 
         if (Physics.Raycast(ray, out var hit, PreviewDistance, LayerMask))
         {
-            Vector3 previewOffset = Vector3.Scale(hit.normal, _currentStructurePreview.transform.localScale) / 2f;
+            Vector3 previewOffset = Vector3.Scale(hit.normal, _currentStructurePreview.SizePivot.transform.localScale) / 2f;
             previewPosition = hit.point + previewOffset;
             if (hit.collider.gameObject.layer == _structurePivotLayer)
             {
@@ -143,6 +139,9 @@ public class BuildSystem : NetworkBehaviour
                 }
 
                 previewPosition = pivotInfo.Structure.transform.position + previewOffset;
+            } else
+            {
+                _currentSelectedStructure = null;
             }
         }
         else
@@ -213,7 +212,7 @@ public class BuildSystem : NetworkBehaviour
 
     private void DestroyStructurePerformed(InputAction.CallbackContext callback)
     {
-        if (!_enabled) return;
+        if (!_enabled || !_currentSelectedStructure) return;
 
         uint structureNetId = _currentSelectedStructure.GetComponent<NetworkIdentity>().netId;
         if (NetworkServer.active)
