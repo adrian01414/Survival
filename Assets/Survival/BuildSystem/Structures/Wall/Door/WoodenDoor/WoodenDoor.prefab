@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6631024771072726108}
   - component: {fileID: 5883052038838582122}
   - component: {fileID: 3456876486380299984}
+  - component: {fileID: -3654978408954653234}
   m_Layer: 0
   m_Name: WoodenDoor
   m_TagString: Untagged
@@ -51,6 +52,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e5669f34da4c01458db6ece55d606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Survival::Door
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   SizePivot: {fileID: 67516407022407820}
   DoorCollider: {fileID: 533390102023343635}
   playerPosition: {x: 0, y: 0, z: 0}
@@ -93,6 +97,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-3654978408954653234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334670781190526234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Mirror.Components::Mirror.NetworkAnimator
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  clientAuthority: 0
+  animator: {fileID: 3456876486380299984}
 --- !u!1 &2160466583985798307
 GameObject:
   m_ObjectHideFlags: 0

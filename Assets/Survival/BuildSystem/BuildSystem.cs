@@ -40,11 +40,11 @@ public class BuildSystem : NetworkBehaviour
     private bool _availableForPlace = true;
 
     private InputManager _inputManager;
-    private GameManager _gameManager;
+    private GameStateManager _gameManager;
     private ResourceBank _resourceBank;
 
     [Inject]
-    public void Construct(InputManager inputManager, GameManager gameManager, ResourceBank resourceBank)
+    public void Construct(InputManager inputManager, GameStateManager gameManager, ResourceBank resourceBank)
     {
         _inputManager = inputManager;
         _gameManager = gameManager;

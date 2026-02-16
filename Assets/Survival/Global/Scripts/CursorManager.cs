@@ -4,9 +4,9 @@ using Zenject;
 
 public class CursorManager : IInitializable, IDisposable
 {
-    private GameManager _gameManager;
+    private GameStateManager _gameManager;
 
-    public CursorManager(GameManager gameManager)
+    public CursorManager(GameStateManager gameManager)
     {
         _gameManager = gameManager;
         ConfinedCursor();

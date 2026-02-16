@@ -9,11 +9,11 @@ public class BuildMenu : MonoBehaviour
 
     public List<BuildMenuItem> Items;
 
-    private GameManager _gameManager;
+    private GameStateManager _gameManager;
     private BuildSystem _buildSystem;
 
     [Inject]
-    public void Construct(GameManager gameManager, BuildSystem buildSystem)
+    public void Construct(GameStateManager gameManager, BuildSystem buildSystem)
     {
         _gameManager = gameManager;
         _buildSystem = buildSystem;

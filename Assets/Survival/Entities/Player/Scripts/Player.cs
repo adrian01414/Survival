@@ -1,4 +1,6 @@
 using System;
+using System.Numerics;
+using Zenject;
 
 public class Player : Entity, IDamagable
 {
@@ -15,6 +17,11 @@ public class Player : Entity, IDamagable
         _health = new(playerStats.Health, playerStats.MaxHealth);
         _stamina = new(playerStats.Stamina, playerStats.MaxStamina);
         _sanity = new(playerStats.Sanity, playerStats.MaxSanity);
+    }
+
+    private void Awake()
+    {
+        GameStateManager.Instance.State = GameState.GameplayDefault;
     }
 
     public void TakeDamage(float damage)

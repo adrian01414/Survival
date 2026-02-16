@@ -1,8 +1,7 @@
-using System;
-using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
-public abstract class Structure : MonoBehaviour
+public abstract class Structure : NetworkBehaviour
 {
     public Transform SizePivot;
 

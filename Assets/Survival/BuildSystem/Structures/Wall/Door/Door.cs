@@ -1,3 +1,4 @@
+using Mirror;
 using UnityEngine;
 
 public class Door : Wall, IInteractable
@@ -5,32 +6,37 @@ public class Door : Wall, IInteractable
     public Collider DoorCollider;
     [HideInInspector] public Vector3 playerPosition;
 
+    [SyncVar(hook = nameof(OnDoorStateChanged))] private bool _isOpen = false;
+
     private Animator _animator;
-    private bool _isOpen = false;
     private int _currentOpenDirection;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-
     }
 
     public void Interact()
     {
-        if (_isOpen)
-        {
-            Close();
-        } else
+        if (!isServer) return;
+
+        _isOpen = !_isOpen;
+    }
+
+    private void OnDoorStateChanged(bool oldValue, bool newValue)
+    {
+        if (newValue)
         {
             Open();
+        } else
+        {
+            Close();
         }
     }
 
     private void Open()
     {
-        _isOpen = true;
-
-        DoorCollider.gameObject.SetActive(false);
+        DoorCollider.isTrigger = true;
 
         Vector3 localOpenerPosition = transform.InverseTransformPoint(playerPosition);
         if(localOpenerPosition.z > 0)
@@ -47,10 +53,8 @@ public class Door : Wall, IInteractable
 
     private void Close()
     {
-        _isOpen = false;
+        DoorCollider.isTrigger = false;
 
-        DoorCollider.gameObject.SetActive(true);
-        
         Vector3 localOpenerPosition = transform.InverseTransformPoint(playerPosition);
         
         if (_currentOpenDirection > 0)

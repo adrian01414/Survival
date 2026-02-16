@@ -1,6 +1,5 @@
 using Mirror;
 using Steamworks;
-using System.ComponentModel;
 using UnityEngine;
 using Zenject;
 
@@ -9,34 +8,37 @@ public class GameBootstrap : MonoBehaviour
     public NetworkManager NetworkManagerPrefab;
 
     private LobbyInfo _lobbyInfo;
-    private GameManager _gameManager;
+    private GameStateManager _gameManager;
     private NetworkManager _networkManager;
     private ResourceBank _resourceBank;
 
+    private TestNetworkManager.Factory _networkManagerFactory;
+
     [Inject]
-    public void Construct(LobbyInfo lobbyInfo, GameManager gameManager, ResourceBank resourceBank)
+    public void Construct(LobbyInfo lobbyInfo, 
+        GameStateManager gameManager, 
+        ResourceBank resourceBank,
+        TestNetworkManager.Factory networkManagerFactory)
     {
         _lobbyInfo = lobbyInfo;
         _gameManager = gameManager;
         _resourceBank = resourceBank;
+        _networkManagerFactory = networkManagerFactory;
     }
 
     private void Awake()
     {
         if (!NetworkManager.singleton && NetworkManagerPrefab)
         {
-            _networkManager = Instantiate(NetworkManagerPrefab);
+            _networkManager = _networkManagerFactory.Create();
 
             if (_networkManager is SteamNetworkManager)
             {
                 SteamMatchmaking.CreateLobby(_lobbyInfo.LobbyType, _lobbyInfo.MaxConnections);
             }
         }
-    }
 
-    private void Start()
-    {
-        _gameManager.State = GameState.GameplayDefault;
+        _gameManager.State = GameState.Loading;
 
         _resourceBank.SetResource<WoodResource>(100);
     }

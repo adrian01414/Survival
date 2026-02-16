@@ -1,9 +1,10 @@
+using Mirror;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
-public class InteractSystem : MonoBehaviour
+public class InteractSystem : NetworkBehaviour
 {
     public LayerMask InteractableLayer;
     public float InteractDistance = 3f;
@@ -39,21 +40,49 @@ public class InteractSystem : MonoBehaviour
             if(hit.collider.TryGetComponent<InteractInfo>(out var interactInfo))
             {
                 _currentInteractInfo = interactInfo;
+            } else
+            {
+                _currentInteractInfo = null;
             }
+        } else
+        {
+            _currentInteractInfo = null;
         }
+    }
+
+    private void OpenDoor(uint netId, Vector3 playerPosition)
+    {
+        var doorGO = NetworkServer.spawned[netId].gameObject;
+        var door = doorGO.GetComponent<Door>();
+        door.playerPosition = playerPosition;
+        door.Interact();
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdOpenDoor(uint netId, Vector3 playerPosition)
+    {
+        OpenDoor(netId, playerPosition);
     }
 
     private void PerformInteract(InputAction.CallbackContext context)
     {
-
         if (!_currentInteractInfo) return;
 
-        if(_currentInteractInfo.InteractableObject is Door)
-        {
-            (_currentInteractInfo.InteractableObject as Door).playerPosition = _camera.transform.position;
-        }
+        var netId = _currentInteractInfo.InteractableObject.GetComponent<NetworkIdentity>().netId;
 
-        (_currentInteractInfo.InteractableObject as IInteractable).Interact();
+        if (_currentInteractInfo.InteractableObject is Door)
+        {
+            var playerPosition = _camera.transform.position;
+
+            if (NetworkServer.active)
+            {
+                OpenDoor(netId, playerPosition);
+            }
+            else
+            {
+                CmdOpenDoor(netId, playerPosition);
+            }
+        }
     }
 
     private void OnDisable()

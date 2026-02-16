@@ -1,9 +1,18 @@
 using System;
 using UnityEngine.InputSystem;
-using Zenject;
 
-public class GameManager
+public enum GameState
 {
+    Loading,
+    GameplayDefault,
+    Build,
+    BuildMenu
+}
+
+public class GameStateManager
+{
+    public static GameStateManager Instance { get; private set; }
+
     public event Action<GameState> OnGameStateChanged;
 
     private GameState _state;
@@ -17,14 +26,12 @@ public class GameManager
         }
     }
 
+    public GameStateManager()
+    {
+        Instance = this;
+    }
+
     public void SetBuildMenuState(InputAction.CallbackContext callback) => State = GameState.BuildMenu;
     public void SetBuildState(InputAction.CallbackContext callback) => State = GameState.Build;
     public void SetGameplayDefaultState(InputAction.CallbackContext callback) => State = GameState.GameplayDefault;
-}
-
-public enum GameState
-{
-    GameplayDefault,
-    Build,
-    BuildMenu
 }

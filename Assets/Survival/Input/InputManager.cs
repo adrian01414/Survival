@@ -27,15 +27,15 @@ public class InputManager : IInitializable, IDisposable, ITickable
     public Vector2 MoveAxis;
 
     private Input _input;
-    private GameManager _gameManager;
+    private GameStateManager _gameStateManager;
 
     private List<InputActionMap> _inputActionMaps = new();
 
-    public InputManager(GameManager gameManager)
+    public InputManager(GameStateManager gameManager)
     {
         Instance = this;
 
-        _gameManager = gameManager;
+        _gameStateManager = gameManager;
 
         _input = new Input();
         _input.Enable();
@@ -65,14 +65,14 @@ public class InputManager : IInitializable, IDisposable, ITickable
 
     public void Initialize()
     {
-        _gameManager.OnGameStateChanged += ChangeInputState;
+        _gameStateManager.OnGameStateChanged += ChangeInputState;
 
-        GameplayDefault_BuildMenu.performed += _gameManager.SetBuildMenuState;
+        GameplayDefault_BuildMenu.performed += _gameStateManager.SetBuildMenuState;
 
-        BuildMenu_CloseMenu.performed += _gameManager.SetGameplayDefaultState;
+        BuildMenu_CloseMenu.performed += _gameStateManager.SetGameplayDefaultState;
 
-        Build_BuildModeDisable.performed += _gameManager.SetGameplayDefaultState;
-        Build_BuildMenu.performed += _gameManager.SetBuildMenuState;
+        Build_BuildModeDisable.performed += _gameStateManager.SetGameplayDefaultState;
+        Build_BuildMenu.performed += _gameStateManager.SetBuildMenuState;
     }
 
     public void Tick()
@@ -112,9 +112,9 @@ public class InputManager : IInitializable, IDisposable, ITickable
 
     public void Dispose()
     {
-        _gameManager.OnGameStateChanged -= ChangeInputState;
+        _gameStateManager.OnGameStateChanged -= ChangeInputState;
 
-        Build_BuildModeDisable.performed -= _gameManager.SetGameplayDefaultState;
-        GameplayDefault_BuildMenu.performed -= _gameManager.SetBuildState;
+        Build_BuildModeDisable.performed -= _gameStateManager.SetGameplayDefaultState;
+        GameplayDefault_BuildMenu.performed -= _gameStateManager.SetBuildState;
     }
 }
