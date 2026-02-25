@@ -23,8 +23,10 @@ public class PlayerNetworkController : NetworkBehaviour
     {
         _characterControllerMovement = GetComponent<CharacterControllerMovement>();
         _inputManager = InputManager.Instance;
-        _inputManager.GameplayDefault_Jump.performed += OnJump;
-        _inputManager.GameplayDefault_Sprint.performed += OnSprint;
+        _inputManager.GameplayDefault_Jump.performed += OnJumpPerformed;
+        _inputManager.GameplayDefault_Jump.canceled += OnJumpCanceled;
+        _inputManager.GameplayDefault_Sprint.performed += OnSprintPerformed;
+        _inputManager.GameplayDefault_Sprint.canceled += OnSprintCanceled;
     }
 
     private void Start()
@@ -39,28 +41,24 @@ public class PlayerNetworkController : NetworkBehaviour
         }
     }
 
-    private void OnSprint(InputAction.CallbackContext context)
+    private void OnSprintPerformed(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            _characterControllerMovement.SprintPerform();
-        }
-        if (context.canceled)
-        {
-            _characterControllerMovement.SprintCancel();
-        }
+        _characterControllerMovement.SprintPerform();
     }
 
-    private void OnJump(InputAction.CallbackContext context)
+    private void OnSprintCanceled(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            _characterControllerMovement.JumpPerform();
-        }
-        else if (context.canceled)
-        {
-            _characterControllerMovement.JumpCancel();
-        }
+        _characterControllerMovement.SprintCancel();
+    }
+
+    private void OnJumpPerformed(InputAction.CallbackContext context)
+    {
+        _characterControllerMovement.JumpPerform();
+    }
+
+    private void OnJumpCanceled(InputAction.CallbackContext context)
+    {
+        _characterControllerMovement.JumpCancel();
     }
 
     private void Update()
@@ -98,7 +96,9 @@ public class PlayerNetworkController : NetworkBehaviour
 
     private void OnDisable()
     {
-        _inputManager.GameplayDefault_Jump.performed -= OnJump;
-        _inputManager.GameplayDefault_Sprint.performed -= OnSprint;
+        _inputManager.GameplayDefault_Jump.performed -= OnJumpPerformed;
+        _inputManager.GameplayDefault_Jump.canceled -= OnJumpCanceled;
+        _inputManager.GameplayDefault_Sprint.performed -= OnSprintPerformed;
+        _inputManager.GameplayDefault_Sprint.canceled -= OnSprintCanceled;
     }
 }

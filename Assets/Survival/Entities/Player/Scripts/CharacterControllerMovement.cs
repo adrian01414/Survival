@@ -215,7 +215,7 @@ public class CharacterControllerMovement : MonoBehaviour
                 _playerVelocityY = Mathf.Lerp(_playerVelocityY, 0f, Time.deltaTime * _overheadObstacleImpact);
 
             if (!_isJumpKeyPressed)
-                _playerVelocityY = Mathf.Lerp(_playerVelocityY, 0f, Time.deltaTime * JumpKeyImpact);
+                _playerVelocityY = Mathf.Lerp(_playerVelocityY, 0f, Time.deltaTime * _jumpKeyImpact);
         }
 
         float currentJumpSpeed = _playerVelocityY < 0f ? FallSpeedMultiplier : UpSpeedMultiplier;
